@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(
   cors({
       origin: [
-          'http://localhost:3000',
+          'https://thirdweb-product-demo-frontend.onrender.com',
       ],
       credentials: true,
       // Allow follow-up middleware to override this CORS for options
