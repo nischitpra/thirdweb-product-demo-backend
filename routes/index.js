@@ -7,6 +7,10 @@ const fetch = require("node-fetch");
 const backendWallet = process.env.BACKEND_WALLET;
 const accessToken = process.env.ACCESS_TOKEN;
 
+router.get("/", (req, res, next) => {
+  return res.send({ serverTime: Date.now() });
+});
+
 /* GET home page. */
 router.post("/mint", async (req, res, next) => {
   try {
@@ -56,14 +60,11 @@ const waitQueueId = async (queueId) => {
   return await new Promise((resolve, reject) => {
     const interval = setInterval(async () => {
       const { result, error } = await (
-        await fetch(
-          `${process.env.ENGINE_URL}/transaction/status/${queueId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        )
+        await fetch(`${process.env.ENGINE_URL}/transaction/status/${queueId}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
       ).json();
 
       if (error) return reject(error.message);
